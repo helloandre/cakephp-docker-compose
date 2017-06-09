@@ -7,24 +7,23 @@ nginx:
         - ./nginx/nginx.conf:/etc/nginx/conf.d/site.conf
     links:
         - php
+    container_name: cakephp_nginx
 
 mysql:
     image: mysql:latest
     volumes:
         - ./mysql/data:/var/lib/mysql
     environment:
-        MYSQL_ROOT_PASSWORD: zoklGt1XvdgBZswKAcv7dOMc5m18tBkwswiEd5SIpxWMjocNUQ
+        MYSQL_ROOT_PASSWORD: somelongrootpassword
         MYSQL_USER: cakephp
-        MYSQL_PASSWORD: UsIdVWm16qd1E6LB3ZGX9tH14w9zLn8HuE3vUTlJ8ZJLB0MbUhd1E6LB3ZGX
-        MYSQL_DATABASE: reddit_clone
-
-# memcache:
-#     image: memcached:latest
+        MYSQL_PASSWORD: cakephp_password
+        MYSQL_DATABASE: cakephp
+    container_name: cakephp_mysql
 
 php:
     build: ./cakephp
     links:
         - mysql
-        # - memcache
     volumes:
         - ./cakephp/www/:/var/www/html/
+    container_name: cakephp_php
